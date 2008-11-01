@@ -1,0 +1,20 @@
+display/x (long)$rax
+display/x (long)$rbx
+display/x (long)$rcx
+display/x (long)$rdx
+display/x (long)$rsi
+display/x (long)$rdi
+display/x (long)$r15
+display/x (long)$r10
+display/x (long)$r9
+display/x (long)$r8
+#display/x *(int*)&memData[$rdi]
+#display/x *(int*)&memData[$rdi+4]
+display/x ((int*)$rsi)[-2]
+display/x ((int*)$rsi)[-1]
+display/x ((int*)$rsi)[0]
+display/x ((int*)$rsi)[1]
+display/x ((int*)$rsi)[2]
+#r t2.qvm
+#r t5.qvm 1 1 2 3 5
+r t4.qvm 1 1

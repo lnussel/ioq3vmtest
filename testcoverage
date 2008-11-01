@@ -1,0 +1,3 @@
+#!/bin/sh
+# ./testcoverage test.qdasm.example
+awk '/^OP_/{++o[$1]}END{for(k in o){print o[k]-1 "   " k}}' ops "$@" |sort -nr
