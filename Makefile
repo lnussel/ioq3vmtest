@@ -13,8 +13,8 @@ endif
 endif
 CFLAGS=-g -Wall -O0 -fno-strict-aliasing
 CPPFLAGS=-DVM_X86_64_STANDALONE -DHAVE_VM_COMPILED -I../code/qcommon/ -DDEBUG_VM
-Q3LCC=../code/tools/q3lcc
-Q3ASM=../code/tools/q3asm
+Q3LCC=../build/release-linux-$(ARCH)/tools/q3lcc
+Q3ASM=../build/release-linux-$(ARCH)/tools/q3asm
 DO_Q3LCC=$(Q3LCC) -Wf-target=bytecode -Wf-g -o $@ -S -DQ3_VM $< || (/bin/rm -f $@; false)
 DO_CC=$(CC) -c $(CPPFLAGS) $(CFLAGS) -o $@ $<
 DO_Q3ASM=$(Q3ASM) -v -o $@ $< syscalls.ASM
