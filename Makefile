@@ -8,10 +8,20 @@ ifeq ($(ARCH),i386)
   VM=vm_x86
   CC+=-m32
 else
+ifeq ($(ARCH),ppc)
+  VM=vm_powerpc
+  CC+=-m32
+else
+ifeq ($(ARCH),ppc64)
+  VM=vm_powerpc
+  CC+=-m64
+else
 $(error arch $(ARCH) is currently not supported)
 endif
 endif
-CFLAGS=-g -Wall -O0 -fno-strict-aliasing
+endif
+endif
+CFLAGS=-g3 -Wall -O0 -fno-strict-aliasing
 CPPFLAGS=-DVM_X86_64_STANDALONE -DHAVE_VM_COMPILED -I../code/qcommon/ -DDEBUG_VM
 Q3LCC=../build/release-linux-$(ARCH)/tools/q3lcc
 Q3ASM=../build/release-linux-$(ARCH)/tools/q3asm
@@ -25,7 +35,13 @@ ifeq ($(VM),vm_x86)
 #XXX
 OBJ += ../build/release-linux-i386/ded/ftola.o
 else
+ifeq ($(VM),vm_x86_64)
 OBJ += vm_x86_64_assembler.o
+else
+ifeq ($(VM),vm_powerpc)
+OBJ += vm_powerpc_asm.o
+endif
+endif
 endif
 
 all: t1.qvm t2.qvm t3.qvm t4.qvm t5.qvm t6.qvm strcpy.qvm main
@@ -53,6 +69,8 @@ vm.o: ../code/qcommon/vm.c
 vm_x86_64_assembler.o: ../code/qcommon/vm_x86_64_assembler.c
 	$(DO_CC)
 
+vm_powerpc_asm.o: ../code/qcommon/vm_powerpc_asm.c
+	$(DO_CC)
 
 vm_interpreted.o: ../code/qcommon/vm_interpreted.c
 	$(DO_CC)
