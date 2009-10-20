@@ -44,7 +44,7 @@ endif
 endif
 endif
 
-all: t1.qvm t2.qvm t3.qvm t4.qvm t5.qvm t6.qvm strcpy.qvm main
+all: t1.qvm t2.qvm t3.qvm t4.qvm t5.qvm t6.qvm strcpy.qvm main jmp.qvm segfault.qvm
 
 syscalls.ASM:
 
@@ -54,6 +54,9 @@ t2.c: tests.c
 	$(DO_Q3LCC)
 
 %.qvm: %.asm
+	$(DO_Q3ASM)
+
+%.qvm: %.tasm
 	$(DO_Q3ASM)
 
 main.o: ../code/qcommon/$(VM).c
