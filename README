@@ -1,0 +1,9 @@
+The ioq3 sources must be in .. relative from this file. Run 'make'
+to compile everything.
+
+The program 'main' takes a qvm file as argument and the arguments
+for the qvm's main function. So e.g. "./main t1.qvm 1 2 3" will tell
+you that the return value is five (see t1.c).
+comparenative.c is special, it contains tests for almost all
+operations. If you just run "./main comparenative.qvm" the program
+will run all tests via qvm and and native and compare the results.

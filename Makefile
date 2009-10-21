@@ -44,11 +44,11 @@ endif
 endif
 endif
 
-all: t1.qvm t2.qvm t3.qvm t4.qvm t5.qvm t6.qvm strcpy.qvm main jmp.qvm segfault.qvm
+all: t1.qvm comparenative.qvm t3.qvm t4.qvm t5.qvm t6.qvm strcpy.qvm main jmp.qvm segfault.qvm
 
 syscalls.ASM:
 
-t2.c: tests.c
+comparenative.c: tests.c
 %.c: syscalls.h
 %.asm: %.c
 	$(DO_Q3LCC)
@@ -99,8 +99,8 @@ main: $(OBJ)
 
 c: t1.s
 
-cs: main t2.qvm
-	./main t2.qvm
+cs: main comparenative.qvm
+	./main comparenative.qvm
 
 asm: t1.obj
 
