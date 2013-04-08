@@ -1,5 +1,6 @@
 #include "vm_local.h"
 #include "vmstats.h"
+#include "ops.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -186,7 +187,7 @@ int main(int argc, char* argv[])
 	if(argc < 2)
 		return -1;
 
-	if(argc > 2 && !strcmp(argv[1], "--stats"))
+	if(argc > 2 && (!strcmp(argv[1], "--stats") || !strcmp(argv[1], "--da")))
 	{
 		vm_t VM = {0};
 		vmHeader_t* header;
@@ -196,11 +197,37 @@ int main(int argc, char* argv[])
 		*vm[0]->name = 0;
 		strncat(vm[0]->name, argv[2], sizeof(vm[0]->name)-strlen(vm[0]->name)-1);
 
-		vmHeader_t* VM_LoadQVM(vm_t *vm, qboolean alloc);
-		if(!( header = VM_LoadQVM( vm[0], qtrue )))
+		vmHeader_t* VM_LoadQVM(vm_t *vm, qboolean alloc, qboolean unpure);
+		if(!( header = VM_LoadQVM( vm[0], qtrue, qtrue )))
 			return 1;
 
-		VM_Stats(vm[0], header, 3);
+		if (!strcmp(argv[1], "--da"))
+		{
+			int pc = 0;
+			byte* code = (byte *)header + header->codeOffset;
+
+			for ( i = 0; i < header->instructionCount; ++i )
+			{
+				int op = code[ pc ];
+				++pc;
+
+				if (op_argsize[op]) {
+					int arg;
+					memcpy(&arg, &code[pc], 4);
+					arg = LittleLong(arg);
+					printf("%s %d\n", opnames[op], arg);
+				} else {
+					printf("%s\n", opnames[op]);
+				}
+
+				pc += op_argsize[op];
+			}
+		}
+		else
+		{
+			VM_Stats(vm[0], header, 3);
+		}
+
 		FS_FreeFile(header);
 
 		return 0;
