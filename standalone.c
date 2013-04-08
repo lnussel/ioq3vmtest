@@ -281,8 +281,15 @@ float Cvar_VariableValue( const char *var_name )
 	return 0.0;
 }
 
-void	* QDECL Sys_LoadDll( const char *name, char *fqpath , intptr_t (QDECL **entryPoint)(int, ...),
+void	* QDECL Sys_LoadGameDll( const char *name, intptr_t (QDECL **entryPoint)(int, ...),
 				  intptr_t (QDECL *systemcalls)(intptr_t, ...) )
 {
 	return NULL;
 }
+
+vmInterpret_t FS_FindVM(void **startSearch, char *found, int foundlen, const char *name, int enableDll)
+{
+	return VMI_COMPILED;
+}
+
+int (QDECL *Q_VMftol)(void) = qvmftolsse;

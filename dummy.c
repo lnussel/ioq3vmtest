@@ -55,6 +55,11 @@ void* Hunk_Alloc(size_t size)
 	return malloc(size);
 }
 
+void *Hunk_AllocDebug( int size, int preference, char *label, char *file, int line )
+{
+	return Hunk_Alloc(size);
+}
+
 void Cmd_AddCommand( void)
 {
 }
@@ -76,6 +81,11 @@ void Com_sprintf( char *dest, int size, const char *fmt, ...)
 void *Z_Malloc(int size)
 {
 	return malloc(size);
+}
+
+void *Z_MallocDebug( int size, char *label, char *file, int line )
+{
+	return Z_Malloc(size);
 }
 
 void Z_Free (void *ptr)
@@ -117,7 +127,7 @@ int Q_stricmp (char *s1, char *s2)
 	return strcmp (s1, s2);
 }
 
-int FS_ReadFile( const char *qpath, void **buffer )
+long FS_ReadFileDir(const char *qpath, void *searchPath, int unpure, void **buffer)
 {
 	size_t size;
 	char* mem;
@@ -143,6 +153,11 @@ int FS_ReadFile( const char *qpath, void **buffer )
 out_error:
 	*buffer = NULL;
 	return -1;
+}
+
+long FS_ReadFile(const char *qpath, void **buffer)
+{
+	return FS_ReadFileDir(qpath, NULL, 0, buffer);
 }
 
 static char* mmapfile(const char* fn, size_t* size)
@@ -181,4 +196,9 @@ int    LongSwap (int l)
 	b4 = (l>>24)&255;
 
 	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
+}
+
+int FS_Which(const char *filename, void *searchPath)
+{
+	return 1;
 }

@@ -2,7 +2,7 @@ VM=none
 CC=gcc
 ARCH=$(shell uname -m | sed -e s/i.86/i386/)
 ifeq ($(ARCH),x86_64)
-  VM=vm_x86_64
+  VM=vm_x86
 else
 ifeq ($(ARCH),i386)
   VM=vm_x86
@@ -33,14 +33,16 @@ V=0
 
 ifeq ($(VM),vm_x86)
 #XXX
-OBJ += ../build/release-linux-i386/ded/ftola.o
+ifeq ($(ARCH),i386)
+OBJ += ../build/release-linux-x86/ded/ftola.o
 else
-ifeq ($(VM),vm_x86_64)
-OBJ += vm_x86_64_assembler.o
+ifeq ($(ARCH),x86_64)
+OBJ += ../build/release-linux-x86_64/ded/ftola.o
+endif
+endif
 else
 ifeq ($(VM),vm_powerpc)
 OBJ += vm_powerpc_asm.o
-endif
 endif
 endif
 
