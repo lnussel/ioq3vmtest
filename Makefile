@@ -16,7 +16,11 @@ ifeq ($(ARCH),ppc64)
   VM=vm_powerpc
   CC+=-m64
 else
+ifeq ($(ARCH),armv7l)
+  VM=vm_armv7l
+else
 $(error arch $(ARCH) is currently not supported)
+endif
 endif
 endif
 endif
@@ -84,7 +88,7 @@ dummy.o: dummy.c
 	$(DO_CC)
 
 main: $(OBJ)
-	$(CC) -g -o $@ $(OBJ)
+	$(CC) -g -o $@ $(OBJ) -lm
 
 %.s: main
 %.s: %.qvm
@@ -111,7 +115,7 @@ disasm: t1.disasm
 raw: t1.raw
 
 clean:
-	rm -f *.o *.asm *.qvm *.map *.obj *.s *.disasm *.qdasm *.raw
+	rm -f *.o *.asm *.qvm *.map *.obj *.disasm *.qdasm *.raw
 
 .SUFFIXES: .asm
 .PRECIOUS: %.asm

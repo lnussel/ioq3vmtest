@@ -319,4 +319,6 @@ vmInterpret_t FS_FindVM(void **startSearch, char *found, int foundlen, const cha
 	return VMI_COMPILED;
 }
 
+#if id386 || idx64
 int (QDECL *Q_VMftol)(void) = qvmftolsse;
+#endif
