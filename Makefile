@@ -50,7 +50,7 @@ OBJ += vm_powerpc_asm.o
 endif
 endif
 
-all: t1.qvm comparenative.qvm t3.qvm t4.qvm t5.qvm t6.qvm strcpy.qvm main jmp.qvm segfault.qvm
+all: t1.qvm comparenative.qvm t2.qvm t3.qvm t4.qvm t5.qvm t6.qvm strcpy.qvm main jmp.qvm segfault.qvm
 
 syscalls.ASM:
 
