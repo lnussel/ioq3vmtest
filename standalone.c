@@ -211,11 +211,14 @@ int main(int argc, char* argv[])
 				int op = code[ pc ];
 				++pc;
 
-				if (op_argsize[op]) {
+				if (op_argsize[op] == 4) {
 					int arg;
 					memcpy(&arg, &code[pc], 4);
 					arg = LittleLong(arg);
 					printf("%s %d\n", opnames[op], arg);
+				} else if (op_argsize[op] == 1) {
+					unsigned char arg = code[pc];
+					printf("%s %hhd\n", opnames[op], arg);
 				} else {
 					printf("%s\n", opnames[op]);
 				}

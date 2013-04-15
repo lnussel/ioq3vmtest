@@ -88,7 +88,7 @@ dummy.o: dummy.c
 	$(DO_CC)
 
 main: $(OBJ)
-	$(CC) -g -o $@ $(OBJ) -lm
+	$(CC) -g -o $@ $(OBJ) -lm -static
 
 %.s: main
 %.s: %.qvm
