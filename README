@@ -7,3 +7,8 @@ you that the return value is five (see t1.c).
 comparenative.c is special, it contains tests for almost all
 operations. If you just run "./main comparenative.qvm" the program
 will run all tests via qvm and and native and compare the results.
+
+how to run in qemu:
+QEMU_LOG=in_asm,int,cpu qemu-arm ./main ...
+
+check /tmp/qemu.log
